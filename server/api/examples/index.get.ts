@@ -1,7 +1,7 @@
 /**
  * Example of BFF proxy implementation with internal data return
  */
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
    const data = {
       foo: "bar",
    }

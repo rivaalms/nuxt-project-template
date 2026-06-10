@@ -12,6 +12,7 @@ export default defineNuxtConfig({
       "@vueuse/nuxt",
       "dayjs-nuxt",
       "pinia-plugin-persistedstate/nuxt",
+      "@nuxt/eslint",
    ],
 
    components: [

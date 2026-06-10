@@ -19,7 +19,7 @@ All files must match the project's formatting standard. Do not let your model ou
 
 ### 2. Leverage Nuxt Auto-Imports (Do NOT Import Manually)
 
-Nuxt automatically imports core APIs, composables, stores, and custom utilities. Writing manual imports for these will cause linting warnings and pollute the codebase.
+Nuxt automatically imports core APIs, composables, stores, and custom utilities. Writing manual imports for these will cause ESLint errors (due to strict `no-restricted-imports` rule) and pollute the codebase.
 
 - **Do NOT import** Vue core APIs: `ref`, `reactive`, `computed`, `watch`, `h`, `unref`, `shallowRef`, `computed`, etc.
 - **Do NOT import** Nuxt core APIs: `useNuxtApp`, `useToast`, `defineNuxtPlugin`, `defineNuxtConfig`, `useRuntimeConfig`, `defineEventHandler`, `readBody`, `getQuery`, etc.
@@ -32,6 +32,11 @@ When using Vue's render function `h()` to pass components dynamically (e.g. to t
 - **Do** import components from the Nuxt virtual path `#components`.
    - _Correct_: `import { FormAuth } from "#components"`
    - _Incorrect_: `import FormAuth from "@/components/form/FormAuth.vue"`
+
+### 4. ESLint Validations & Formatting Compliance
+
+- **Run Lint Check**: Always validate your code before completing a task by running `pnpm lint`.
+- **Follow Auto-Fixes**: Run `pnpm exec eslint . --fix` to resolve standard linting formatting or syntax errors automatically. Do not leave syntax or unused import warnings unattended.
 
 ---
 

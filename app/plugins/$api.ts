@@ -1,6 +1,6 @@
 import type { H3Error } from "#build/types/nitro-imports"
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(() => {
    const handler = $fetch.create({
       // disable auto retry
       retry: false,

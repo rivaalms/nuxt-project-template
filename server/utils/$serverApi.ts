@@ -1,4 +1,4 @@
-import { H3Event } from "h3"
+import type { H3Event } from "h3"
 
 export default function (event: H3Event) {
    const config = useRuntimeConfig(event)
@@ -32,7 +32,7 @@ export default function (event: H3Event) {
             name: error.name,
          })
       },
-      onResponseError({ error, response }) {
+      onResponseError({ response }) {
          /**
           * Default 401 handler
           * Automatically delete [auth-token] cookie

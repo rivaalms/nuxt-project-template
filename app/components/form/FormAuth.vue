@@ -48,8 +48,8 @@ function onSubmit(e: FormSubmitEvent<InferSchema<typeof schema>>) {
    <UForm
       :schema="schema"
       :state="state"
-      @submit="onSubmit"
       class="flex flex-col gap-4"
+      @submit="onSubmit"
    >
       <UFormField
          name="email"

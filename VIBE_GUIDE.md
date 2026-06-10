@@ -14,6 +14,7 @@ Proyek ini dibangun menggunakan modern JavaScript/TypeScript stack:
 - **Date Utility**: [Day.js](https://day.js.org) (dengan locale default `id`, timezone `Asia/Jakarta`, serta plugin `timezone`, `relativeTime`, dan `utc`)
 - **Validation**: [Zod](https://zod.dev)
 - **Composables**: [VueUse](https://vueuse.org) (`@vueuse/core` dan `@vueuse/nuxt`)
+- **Linting & Formatting**: [ESLint](https://eslint.org) Flat Config (v9+) terintegrasi dengan `@nuxt/eslint` dan `eslint-plugin-prettier`
 - **Formatting**: [Prettier](https://prettier.io) (konfigurasi khusus: `tabWidth: 3`, tanpa semicolon, double quotes, serta attribute satu baris per line untuk HTML/Vue)
 
 ---
@@ -134,6 +135,17 @@ Karena dynamic classes seperti `max-w-${width}` tidak dapat dianalisa secara sta
    ```
    Hal ini memaksa Tailwind v4 untuk mengompilasi utility class tersebut agar siap digunakan saat runtime.
 
+### 5. ESLint & Strict Import Checking (Flat Config)
+
+ESLint di proyek ini dikonfigurasi menggunakan berkas [eslint.config.mjs](/eslint.config.mjs) (Flat Config).
+
+- **Integrasi Prettier**: Semua pemformatan gaya ditangani secara terpusat oleh Prettier, dan akan dideteksi oleh ESLint sebagai error via `eslint-plugin-prettier`.
+- **Mencegah Manual Import**: ESLint diatur secara ketat dengan aturan `no-restricted-imports`. Upaya mengimpor secara manual modul-modul berikut akan dideteksi sebagai error:
+   - Vue core APIs (`ref`, `reactive`, `computed`, `watch`, dll.) dari package `"vue"`.
+   - Nuxt core APIs (`useNuxtApp`, `useToast`, `defineEventHandler`, dll.) dari package `"#imports"`.
+   - Komponen lokal langsung dari berkas pathnya (seperti `~/components/form/FormAuth.vue` -- gunakan auto-import di template atau virtual `"#components"` jika menggunakan render function `h()`).
+   - Composables, stores, dan utils lokal.
+
 ---
 
 ## 🤖 Panduan Vibe-Coding (AI Agent Guidelines)
@@ -150,3 +162,4 @@ Bagi pengembang yang menggunakan AI Coding Agent (seperti Claude, Cursor, Gemini
 5. **Re-export Shared Utils**: Jika Anda menambahkan file baru di dalam subdirektori `shared/utils/...`, pastikan untuk me-reexport fungsi tersebut di [shared/utils/index.ts](/shared/utils/index.ts).
 6. **Gunakan Global Types**: Semua interface data transfer object (DTO) diletakkan di `shared/types/dto/` dan dideklarasikan secara global (`interface DTOName`) tanpa keyword `export`, agar otomatis tersedia di semua file TypeScript proyek tanpa perlu import.
 7. **Konfigurasi Tailwind CSS di VSCode**: Jika menggunakan Nuxt UI v4, pastikan VSCode diset untuk melakukan autocomplete Tailwind CSS pada atribut `ui` dengan menambahkan `"tailwindCSS.classAttributes": ["class", "ui"]` pada settings workspace.
+8. **Patuhi Aturan ESLint**: Selalu validasi kode menggunakan perintah `pnpm lint`. Jangan menulis import manual untuk API/utilitas yang di-autoimport, karena ESLint secara ketat akan melempar error `no-restricted-imports` dan membatalkan proses build.

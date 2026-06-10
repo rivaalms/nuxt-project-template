@@ -14,6 +14,7 @@ Template ini menggunakan kombinasi teknologi modern berikut:
 - **Validasi**: [Zod](https://zod.dev)
 - **Date Utility**: [Day.js](https://day.js.org) (default timezone `Asia/Jakarta`, locale `id`)
 - **Composables**: [VueUse](https://vueuse.org)
+- **Linting & Formatting**: [ESLint](https://eslint.org) Flat Config (v9+) terintegrasi dengan `@nuxt/eslint` dan `eslint-plugin-prettier`
 - **Peralatan**: [Prettier](https://prettier.io) (konfigurasi: `tabWidth: 3`, double-quotes, no-semicolon)
 
 ---
@@ -46,12 +47,19 @@ pnpm build
 pnpm preview
 ```
 
-### 4. Format Kode
+### 4. Format & Lint Kode
 
-Proyek ini menegakkan aturan pemformatan yang ketat. Selalu jalankan pemformat kode sebelum membuat commit:
+Proyek ini menegakkan aturan pemformatan dan linter yang ketat. Selalu jalankan format dan pengecekan kode sebelum membuat commit:
 
 ```bash
-pnpm format .
+# Memformat kode menggunakan Prettier
+pnpm format
+
+# Menjalankan ESLint (dengan integrasi Prettier)
+pnpm lint
+
+# Menjalankan ESLint auto-fix
+pnpm exec eslint . --fix
 ```
 
 ---
@@ -104,3 +112,4 @@ Jika Anda menggunakan AI coding assistant (seperti Cursor, Claude, Gemini, dll.)
 2. Menghindari penulisan `import` manual yang redundan karena auto-import Nuxt.
 3. Memasukkan komponen ke dalam virtual package `#components` jika memanggil modal via render function `h()`.
 4. Menambahkan dynamic class ke konfigurasi `@source` di [main.css](/app/assets/css/main.css) agar Tailwind v4 mengompilasi utility classes dengan benar saat runtime.
+5. Memastikan semua kode lolos uji linter dengan menjalankan `pnpm lint` dan mematuhi aturan import yang ketat (`no-restricted-imports`).
