@@ -30,9 +30,8 @@ Template ini menerapkan arsitektur modular yang membagi kode client, server, dan
 │   ├── composables/          # Vue composables
 │   ├── layouts/              # Nuxt layouts
 │   ├── pages/                # Nuxt routing pages
-│   ├── plugins/              # Client-side Nuxt plugins
 │   ├── stores/               # Pinia stores
-│   └── utils/                # Client-side utility functions
+│   └── utils/                # Client-side utility functions (termasuk $api)
 │
 ├── server/                   # Nitro Server (Backend-For-Frontend / BFF layer)
 │   ├── api/                  # API endpoints server (BFF proxy)
@@ -99,6 +98,8 @@ Template ini menyediakan composable [useApi](/app/composables/useApi.ts) yang me
    ```
 
 - **Auto-Error Notification**: Jika request gagal, `useApi` otomatis memanggil `$notifyError` untuk menampilkan pesan kesalahan menggunakan sistem toast global.
+
+- **HTTP Client `$api`**: Di balik layar, `useApi` menggunakan [$api](/app/utils/$api.ts) sebagai HTTP client-nya. `$api` merupakan instance `$fetch.create` kustom yang diletakkan di [app/utils/$api.ts](/app/utils/$api.ts) (sebelumnya merupakan plugin di `app/plugins/$api.ts`). Karena ditempatkan di direktori `utils`, `$api` di-import secara otomatis oleh Nuxt dan dapat digunakan langsung di seluruh kode client tanpa import manual.
 
 ### 3. Global Modal System & Reactive Render Function
 

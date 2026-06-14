@@ -68,7 +68,7 @@ pnpm exec eslint . --fix
 
 Kami membagi kode ke dalam tiga bagian utama (sesuai konvensi Nuxt 4):
 
-- [app/](/app): Area pengembangan frontend utama (pages, components, layouts, stores, plugins, utils).
+- [app/](/app): Area pengembangan frontend utama (pages, components, layouts, stores, utils).
 - [server/](/server): Nitro Server yang berfungsi sebagai Backend-For-Frontend (BFF).
 - [shared/](/shared): Berisi tipe data TypeScript global ([shared/types/](/shared/types)) dan utilitas/skema validasi Zod ([shared/utils/](/shared/utils)) yang digunakan bersama oleh `app/` dan `server/`.
 
@@ -94,9 +94,10 @@ Client tidak memanggil API pihak ketiga secara langsung. Client mengirim request
 - Menghapus cookie otentikasi jika mendapat respons `401 Unauthorized` dari API pihak ketiga.
 - _Type Safety_: Endpoint server wajib menyertakan method `toJSON()` agar TypeScript client dapat membaca tipe data respons secara otomatis.
 
-### 2. Request API di Client (`useApi`)
+### 2. Request API di Client (`useApi` & `$api`)
 
-Gunakan custom composable [useApi](/app/composables/useApi.ts) untuk memanggil API lokal. Secara default, `watch: false` untuk mencegah request duplikat saat parameter reaktif berubah. Jika terjadi error, toast notifikasi kesalahan akan otomatis muncul secara global.
+- **`useApi`**: Gunakan custom composable [useApi](/app/composables/useApi.ts) untuk memanggil API lokal secara reaktif. Secara default, `watch: false` untuk mencegah request duplikat saat parameter reaktif berubah. Jika terjadi error, toast notifikasi kesalahan akan otomatis muncul secara global.
+- **`$api`**: Untuk request imperatif sekali jalan tanpa reactivity (seperti submit form), gunakan langsung [$api](/app/utils/$api.ts). `$api` adalah instance `$fetch` kustom yang dikonfigurasi di [app/utils/$api.ts](/app/utils/$api.ts). Ini di-auto-import secara otomatis oleh Nuxt.
 
 ### 3. Sistem Modal Global
 

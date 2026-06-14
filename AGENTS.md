@@ -66,6 +66,7 @@ When using Vue's render function `h()` to pass components dynamically (e.g. to t
 
 - Use [useApi](/app/composables/useApi.ts) for fetching.
 - **Non-reactive default**: `watch` is disabled by default (`watch: false`). If your fetch depends on reactive parameters (like search terms or pagination), you must explicitly supply the watch array: `useApi(url, { watch: [queryParams] })`.
+- **Client-Side Utility `$api`**: The underlying HTTP client is [$api](/app/utils/$api.ts), a custom `$fetch` instance defined in [app/utils/$api.ts](/app/utils/$api.ts). It is auto-imported globally by Nuxt, so do not import it manually. Use `$api` directly for one-off/imperative API calls.
 
 ### 3. Global Modal Reactivity
 
